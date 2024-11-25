@@ -2,6 +2,10 @@ const mongoose = require('mongoose');
 
 // Define the restaurant schema
 const restaurantSchema = new mongoose.Schema({
+    id:{
+        type: Number,
+        required: true
+    },
   title: {
     type: String,
     required: true,
