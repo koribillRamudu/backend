@@ -21,7 +21,7 @@ mongoose.connect(process.env.MONGO_URI)
 // Use routes
 app.use('/api/auth', authRoutes);
 app.use('/api', restaurantRoutes);
-app.use('/api/menu',menuRoutes)
+app.use('/api/menu',menuRoutes);
 
 // Start the server
 const PORT = process.env.PORT || 5000;

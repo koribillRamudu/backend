@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs');
 
 // Define the user schema
 const userSchema = new mongoose.Schema({
@@ -43,22 +42,13 @@ const userSchema = new mongoose.Schema({
   address: {
     type: String,
     required: true
+  },
+  role: {
+    type: String,
+    require: true
   }
-}, { timestamps: true });
-
-// Hash password before saving it to the database
-userSchema.pre('save', async function(next) {
-  if (this.isModified('password')) {
-    const salt = await bcrypt.genSalt(10);
-    this.password = await bcrypt.hash(this.password, salt);
-  }
-  next();
-});
-
-// Method to check if the entered password matches the hashed password
-userSchema.methods.matchPassword = async function(password) {
-  return await bcrypt.compare(password, this.password);
-};
+},
+ { timestamps: true });
 
 // Create the model based on the schema
 const User = mongoose.model('User', userSchema);

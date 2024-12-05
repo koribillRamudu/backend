@@ -1,8 +1,9 @@
-const User=require('../models/User')
 const bcrypt = require('bcryptjs');
+const User = require('../models/User');  // Assuming your User model is correctly set up
 
+// Register user function
 const registerUser = async (req, res) => {
-  const { username, email, password, phoneNumber, address } = req.body;
+  const { username, email, password, phoneNumber, address, role } = req.body;
 
   try {
     const userExists = await User.findOne({ email });
@@ -10,15 +11,13 @@ const registerUser = async (req, res) => {
       return res.status(400).json({ message: 'User already exists with this email' });
     }
 
-    // Hash the password before saving
-    const hashedPassword = await bcrypt.hash(password, 10);
-
     const newUser = new User({
       username,
       email,
-      password: hashedPassword,  // Save hashed password
+      password,
       phoneNumber,
       address,
+      role,
     });
 
     await newUser.save();
@@ -29,11 +28,9 @@ const registerUser = async (req, res) => {
   }
 };
 
-
-// Get all user details
+// Get all user details (Optional, might be for admin use)
 const getAllUserDetails = async (req, res) => {
   try {
-    // Fetch all users from the database
     const userDetails = await User.find();
     res.status(200).json(userDetails);
   } catch (error) {
