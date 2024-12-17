@@ -3,7 +3,10 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const authRoutes = require('./routes/authRoutes');
 const restaurantRoutes = require('./routes/restaurantRoutes');
-const menuRoutes=require('./routes/menuRoutes')
+const menuRoutes=require('./routes/menuRoutes');
+const cartRoutes = require('./routes/cartRoutes');
+const orderRoutes=require('./routes/orderRoutes')
+
 const cors = require('cors');
 
 dotenv.config();
@@ -22,6 +25,9 @@ mongoose.connect(process.env.MONGO_URI)
 app.use('/api/auth', authRoutes);
 app.use('/api', restaurantRoutes);
 app.use('/api/menu',menuRoutes);
+app.use('/api', cartRoutes);
+app.use('/api/orders',orderRoutes);
+
 
 // Start the server
 const PORT = process.env.PORT || 5000;
